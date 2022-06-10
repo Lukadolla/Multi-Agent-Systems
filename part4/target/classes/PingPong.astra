@@ -1,0 +1,9 @@
+agent PingPong {
+    types pp {
+        formula ping();
+        formula pong();
+    }
+
+    module Console console; 
+    module System system;
+}
