@@ -1,0 +1,9 @@
+agent BeerOntology {
+  // Formulae used in the protocol
+  types beer {
+    formula get(string);
+    formula got(string);
+  }
+
+	module Console C;
+}

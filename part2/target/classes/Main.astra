@@ -1,0 +1,9 @@
+agent Main {
+  module System system;
+
+  rule +!main(list args) {
+    system.createAgent("ping", "Ping");
+    system.createAgent("pong", "Pong"); 
+    system.setMainGoal("pong", ["ping"]);
+  }
+}

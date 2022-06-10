@@ -1,71 +1,19 @@
 agent Main {
-    module EIS ei;
-    module Console C;
-    module System S;
+  module System system;
 
-    types tower_ont {
-        formula free(string);
-    }
+  rule +!main(list args) {
+    system.createAgent("server", "BeerServer");
 
-    inference free(string X) :- ~ei.on(string Y, X);
-    inference free(string X) :- X == "table";
+    system.createAgent("drinker", "BeerDrinker");
+    system.createAgent("drinker1", "BeerDrinker");
+    system.createAgent("drinker2", "BeerDrinker");
+    system.createAgent("drinker3", "BeerDrinker");
+    system.createAgent("drinker4", "BeerDrinker");
 
-    rule +!main(list args) {
-        ei.launch("hw","dependency/tower-1.3.0.jar");
-        ei.init();
-	    ei.join();
-        ei.link("gripper");
-	    ei.startEnv();
-        
-        C.println("waiting for block d");
-        wait(ei.block("d"));
-
-        !tower("a", "b");
-        !tower("b", "a", "d");
-        !tower("f", "a", "d", "e");
-    }
-
-    rule +!tower(string X, string Y, string Z) {
-        !holding(Z);!on(Z, "table");
-        !holding(Y);!on(Y, Z);
-        !holding(X);!on(X, Y);
-    }
-
-    rule +!tower(string X, string Y) {
-         !holding(Y);!on(Y, "table");
-         !holding(X);!on(X, Y);
-    }
-
-    rule +!tower(string X, string Y, string Z, string W) {
-        !holding(W);!on(W, "table");
-        !holding(Z);!on(Z, W);
-        !holding(Y);!on(Y, Z);
-        !holding(X);!on(X, Y);
-    }
-    
-    rule +!holding(string target) : ~ei.holding(string Y) & free(target) {
-        ei.pickup(target);
-        wait(ei.holding(target));
-    }
-
-    rule +!holding(string target) : ~ei.holding(string Y) & ei.on(string X, target) {
-            !destack(X);
-            ei.pickup(target);
-            wait(ei.holding(target));
-        }
-
-    rule +!destack(string target) : free(target) {
-        !holding(target);!on(target, "table");
-    }
-
-    rule +!destack(string target) : ei.on(string Y, target) {
-             !destack(Y);
-             !destack(target);
-        }
-
-
-    rule +!on(string block, string target) : ei.holding(block) & free(target) {
-        ei.putdown(block, target);
-        wait(ei.on(block, target));
-    }
+    system.setMainGoal("drinker", ["server", "Beer"]);
+    system.setMainGoal("drinker1", ["server", "Coffee"]);
+    system.setMainGoal("drinker2", ["server", "Monster Energy Drink TM"]);
+    system.setMainGoal("drinker3", ["server", "Bepis"]);
+    system.setMainGoal("drinker4", ["server", "Charbonay"]);
+  }
 }

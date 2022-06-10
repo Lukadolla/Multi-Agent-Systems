@@ -1,0 +1,19 @@
+agent BeerDrinker extends BeerOntology {
+  types drinker {
+    formula failed_to_get(string);
+  }
+	rule +!main([string server]) {
+	    send(request, server, get("beer"));
+	}
+	rule @message(agree, string sender, get("beer")) {
+	    wait(got("beer") | failed_to_get("beer"));
+	    if (got("beer")) C.println("Yummy in my tummy!");
+	}
+	rule @message(inform, string sender, got("beer")) {
+	    +got("beer");
+	}
+	rule @message(failure, string sender, get("beer")) {
+	    +failed_to_get("beer");
+	}
+}
+

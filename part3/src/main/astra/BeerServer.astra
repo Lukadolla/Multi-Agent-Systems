@@ -1,0 +1,33 @@
+agent BeerServer extends BeerOntology {
+  types server {
+    formula has(string);
+  }
+
+  initial has("Beer");
+  initial has("Coffee");
+  initial has("Monster Energy Drink TM");
+  initial has("Bepis");
+
+  rule @message(request, string sender, get(string X)) {
+    if (~has(X)) send(failure, sender, get(X));
+    else {
+      send(agree, sender, get(X));
+
+      try {
+        !get(X);
+        !deliver(X, sender);
+        send(inform, sender, got(X));
+      } recover { 
+        send(failure, sender, get(X));
+      }
+    }
+  }
+
+  rule +!get(string X) {
+      C.println("Got " + X);
+  }
+
+  rule +!deliver(string X, string sender) {
+      C.println("Delivered: " + X + " to: " + sender);
+  }
+}

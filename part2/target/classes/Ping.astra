@@ -1,0 +1,7 @@
+agent Ping extends PingPong {
+  rule @message(request, string sender, ping()) {
+    console.println("ping");
+    system.sleep(500);
+    send(inform, sender, pong());
+  }
+}
