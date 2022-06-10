@@ -1,0 +1,12 @@
+agent Pong extends PingPong {
+  rule +!main([string target, string target2]) {
+    send(request, target, ping());
+    send(request, target2, ping());
+  }
+  
+  rule @message(inform, string sender, pong()) {
+    console.println("pong");
+    system.sleep(500);
+    send(request, sender, ping());
+  }
+}
