@@ -1,0 +1,24 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>lab3</groupId>
+	<artifactId>lab3</artifactId>
+	<version>1.0.0</version>
+    <parent>
+		<groupId>com.astralanguage</groupId>
+		<artifactId>astra-base</artifactId>
+		<version>1.0.7</version>
+		<relativePath></relativePath>
+	</parent>
+
+    <properties>
+        <astra.name>hiby</astra.name>
+        <!-- <astra.main>HelloAll</astra.main> -->
+    </properties>
+
+	<modules>
+		<module>part1</module>
+		<module>part2</module>
+		<module>part3</module>
+		<module>part4</module>
+	</modules>
+</project>

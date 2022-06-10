@@ -1,0 +1,12 @@
+/**
+ * Stored in a file called Hello.astra
+ */
+agent Hello {
+  // Modules implement actions and/or sensors
+  module Console console;
+
+  // The ASTRA Equivalent of the main method
+  rule +!main(list args) {
+    console.println("Hello, ASTRA World!");
+  }
+}

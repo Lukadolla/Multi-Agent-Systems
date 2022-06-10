@@ -1,0 +1,59 @@
+agent Light3 {
+
+    module Console console;
+    module Debug d;
+    module System s;
+
+    types states {
+        formula switch(string);
+        formula light(string);
+        formula transition(string, string);
+        formula flash(int);
+    }
+
+    initial switch("on");
+    initial light("off");
+    initial transition("off", "on");
+    initial transition("on", "off");
+    initial !switch("on");
+
+    rule +!switch(string S) {
+       !light(S);
+    }
+
+    rule +!main(list args){
+        !flash(4);
+        s.exit();
+    }
+
+    rule +!light(string R) : light(string S) & transition(S, R) {
+      -light(S);
+      +light(R);
+      console.println("The Light is: " + R);
+    }
+
+    rule +!light(string S) {
+
+    }
+
+    rule +!switch(string S) : switch(string R) & transition(R, S) {
+        -switch(R);
+        +switch(S);
+        !light(S);
+    }
+
+    rule +!flash(int N) : N == 1 {
+        !switch("on");
+        s.sleep(2000);
+        !switch("off");
+        s.sleep(2000);
+    }
+
+    rule +!flash(int N) {
+        !switch("on");
+        s.sleep(2000);
+        !switch("off");
+        s.sleep(2000);
+        !flash(N-1);
+    }
+}

@@ -1,0 +1,17 @@
+/**
+ * Stored in a file called Hello.astra
+ */
+agent Main {
+  // Modules implement actions and/or sensors
+  module Console console;
+  module Debug d;
+
+  // The ASTRA Equivalent of the main method
+  rule +!main(list args) {
+    !subgoal();
+  }
+  
+  rule +!subgoal() {
+    d.printStackTrace();
+  }
+}

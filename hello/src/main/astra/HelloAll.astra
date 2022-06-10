@@ -1,0 +1,17 @@
+agent HelloAll {
+  module Console console;
+  types people {
+    formula knows(string);
+    formula greeted(string);
+  }
+
+  initial knows("Rem"), knows("Fred");
+
+  rule +!main(list args) { !greetAll(); }
+  rule +!greetAll() : knows(string X) & ~greeted(X) {
+    console.println("Hello, " + X + "!");
+    +greeted(X);
+    !greetAll();
+  }
+  rule +!greetAll() { }
+}

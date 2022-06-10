@@ -1,0 +1,44 @@
+agent Light2 {
+
+    module Console console;
+    module Debug d;
+    module System s;
+
+    types states {
+        formula switch(string);
+        formula light(string);
+        formula transition(string, string);
+    }
+
+    initial switch("off");
+    initial light("off");
+    initial transition("off", "on");
+    initial transition("on", "off");
+    initial !switch("on");
+
+    rule +!switch(string S) {
+       !light(S);
+    }
+
+    rule +!main(list args){
+        !switch("on");
+        s.exit();
+    }
+
+    rule +!light(string R) : light(string S) & transition(S, R) {
+      -light(S);
+      -switch(S);
+      +light(R);
+      console.println("The Light is: " + R);
+    }
+
+    rule +!light(string S) {
+
+    }
+
+    rule +!switch(string S) : switch(string R) & transition(R, S) {
+        -switch(R);
+        +switch(S);
+        !light(S);
+    }
+}

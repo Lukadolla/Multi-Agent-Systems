@@ -1,0 +1,15 @@
+agent Happy {
+
+  module Console console;
+  module Debug d;
+  module System s;
+
+  rule +!main(list args) {
+    !hello();
+  }
+  
+  rule +!hello() {
+    console.println("Hello, Lukas!");
+    s.exit();
+  }
+}
